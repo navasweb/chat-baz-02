@@ -6,7 +6,7 @@
 
 <div class="flex flex-col h-screen w-screen bg-bg overflow-hidden">
   <header class="h-14 flex items-center justify-center border-b border-border shrink-0">
-    <h1 class="font-sans text-[15px] font-semibold tracking-tight text-primary">
+    <h1 class="font-sans text-[30px] font-semibold tracking-tight text-primary">
       Badajoz<span class="text-accent">GPT</span>
     </h1>
   </header>
