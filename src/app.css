@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: oklch(14% 0.005 285);         /* fondo raíz, casi negro con matiz frío */
+  --color-surface: oklch(19% 0.006 285);    /* burbujas assistant, sidebar */
+  --color-border: oklch(100% 0 0 / 10%);    /* bordes sutiles */
+  --color-accent: oklch(65% 0.15 165);      /* verde esmeralda — único acento */
+  --color-primary: oklch(96% 0.002 285);    /* texto principal */
+  --color-muted: oklch(65% 0.01 285);       /* texto secundario */
+
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: var(--color-bg);
+}
+
+/* Scrollbar discreta para ChatWindow */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: oklch(100% 0 0 / 15%);
+  border-radius: 9999px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
