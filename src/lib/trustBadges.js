@@ -4,11 +4,6 @@
 
 export const trustBadges = [
   {
-    icon: "ShieldCheck",
-    label: "Cifrado SSL/TLS",
-    description: "Conexión end-to-end segura",
-  },
-  {
     icon: "EyeOff",
     label: "Zero Data Retention",
     description: "Tus conversaciones no se almacenan",
