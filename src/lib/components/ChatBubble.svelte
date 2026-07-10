@@ -56,26 +56,74 @@
       .trim();
   }
 
-  async function copyAsMarkdown() {
-    if (!content) return;
+  async function copyText(text, mode) {
+    if (!text) return;
 
-    await navigator.clipboard.writeText(content);
-    copiedMode = "markdown";
+    try {
+      if (
+        typeof navigator !== "undefined" &&
+        navigator.clipboard &&
+        typeof navigator.clipboard.writeText === "function" &&
+        window.isSecureContext
+      ) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        fallbackCopyText(text);
+      }
 
-    setTimeout(() => {
-      copiedMode = null;
-    }, 1400);
+      copiedMode = mode;
+
+      setTimeout(() => {
+        copiedMode = null;
+      }, 1400);
+    } catch (error) {
+      console.error("No se pudo copiar con navigator.clipboard:", error);
+
+      try {
+        fallbackCopyText(text);
+
+        copiedMode = mode;
+
+        setTimeout(() => {
+          copiedMode = null;
+        }, 1400);
+      } catch (fallbackError) {
+        console.error("No se pudo copiar con fallback:", fallbackError);
+      }
+    }
   }
 
-  async function copyAsPlainText() {
-    if (!content) return;
+  function fallbackCopyText(text) {
+    const textarea = document.createElement("textarea");
 
-    await navigator.clipboard.writeText(markdownToPlainText(content));
-    copiedMode = "plain";
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.left = "-9999px";
+    textarea.style.top = "-9999px";
+    textarea.style.opacity = "0";
 
-    setTimeout(() => {
-      copiedMode = null;
-    }, 1400);
+    document.body.appendChild(textarea);
+
+    textarea.focus();
+    textarea.select();
+    textarea.setSelectionRange(0, textarea.value.length);
+
+    const copied = document.execCommand("copy");
+
+    document.body.removeChild(textarea);
+
+    if (!copied) {
+      throw new Error("document.execCommand('copy') falló");
+    }
+  }
+
+  function copyAsMarkdown() {
+    copyText(content, "markdown");
+  }
+
+  function copyAsPlainText() {
+    copyText(markdownToPlainText(content), "plain");
   }
 </script>
 
